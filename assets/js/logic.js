@@ -28,12 +28,7 @@
 // ##########################################################################
 // collectig ideas / testing
 // ##########################################################################
-// setInterval(displayDate, 1000);
 
-// function displayDate() {
-//   currentDate = new Date();
-//   console.log(currentDate.toLocaleString());
-// }
 // const notToday = new Date(2019, 2, 28, 14, 55);
 // const today = new Date();
 // const year = today.getFullYear();
@@ -58,3 +53,10 @@
 // $(function () {
 //   console.log('it loads when the whole page got loaded');
 // });
+
+const currentDay = $('#currentDay');
+setInterval(displayDate, 1000);
+
+function displayDate() {
+  currentDay.text(new Date().toLocaleString());
+}
