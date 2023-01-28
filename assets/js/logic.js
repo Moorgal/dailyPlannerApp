@@ -56,7 +56,27 @@
 
 const currentDay = $('#currentDay');
 setInterval(displayDate, 1000);
-
 function displayDate() {
   currentDay.text(new Date().toLocaleString());
 }
+
+$(function () {
+  $('#datepicker').datepicker();
+});
+
+// ######################---no touch above ---#############################
+
+const formInput = $('#formInput');
+const activityInput = $('#activityInput');
+const datePicker = $('#datepicker');
+
+let submitForm = function (event) {
+  event.preventDefault();
+
+  console.log(activityInput.val());
+  console.log(datePicker.val());
+  activityInput.val('');
+  datePicker.val('');
+};
+
+formInput.on('submit', submitForm);
