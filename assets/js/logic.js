@@ -29,13 +29,6 @@
 // collectig ideas / testing
 // ##########################################################################
 
-// const today = new Date();
-// const year = today.getFullYear();
-// const month = today.getMonth();
-// const day = today.getDate();
-// const hour = today.getHours();
-// const minutes = today.getMinutes();
-
 // // Creating a new Date (with the delta)
 // const finalDate = new Date(year, month, day + 17);
 
@@ -47,21 +40,53 @@
 //   console.log('it loads when the whole page got loaded');
 // });
 
+const formInput = $('#formInput');
+const activityInput = $('#activityInput');
+const dateInput = $('#dateInput');
+const hourInput = $('#hourInput');
+const container = $('#container');
+
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const hours = [
+  '0:00',
+  '1:00',
+  '2:00',
+  '3:00',
+  '4:00',
+  '5:00',
+  '6:00',
+  '7:00',
+  '8:00',
+  '9:00',
+  '10:00',
+  '11:00',
+  '12:00',
+  '13:00',
+  '14:00',
+  '15:00',
+  '16:00',
+  '17:00',
+  '18:00',
+  '19:00',
+  '20:00',
+  '21:00',
+  '22:00',
+  '23:00',
+];
+// -------------------------------------------------------------------------------
+// function what displays the current time and date
+// -------------------------------------------------------------------------------
+
 const currentDay = $('#currentDay');
 setInterval(displayDate, 1000);
 function displayDate() {
   currentDay.text(new Date().toLocaleString());
 }
 
-// ######################---no touch above ---#############################
-
-const formInput = $('#formInput');
-const activityInput = $('#activityInput');
-const dateInput = $('#dateInput');
-const hourInput = $('#hourInput');
-const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
+// -------------------------------------------------------------------------------
+// submit the activity form
+// -------------------------------------------------------------------------------
 let submitForm = function (event) {
   event.preventDefault();
   let dateValue = dateToNewDate(dateInput);
@@ -81,7 +106,9 @@ let submitForm = function (event) {
 };
 formInput.on('submit', submitForm);
 
+// -------------------------------------------------------------------------------
 // function what works with a date value, and gives back a new Date() value
+// -------------------------------------------------------------------------------
 function dateToNewDate(value) {
   let oldDate = value.val();
   let msec = Date.parse(oldDate); // swap the date to millisec then from millisec swap to newDate()
@@ -89,8 +116,57 @@ function dateToNewDate(value) {
   return newDate;
 }
 
-// 1 create 7 column layout
-// 2 create 13 rows in them + 1 for the dayName
+// -------------------------------------------------------------------------------
+// create the calendar dinamically
+// -------------------------------------------------------------------------------
+
+function createCalendar() {
+  // create time on left
+  let dayNumberRow = $('<h1>');
+  let dayNameRow = $('<p>');
+  let ul = $('<ul>');
+  let div = $('<div>');
+  dayNameRow.text('hey');
+  dayNumberRow.text('0');
+  container.append(div);
+  div.append(dayNumberRow);
+  div.append(dayNameRow);
+  div.append(ul);
+  for (let i = 0; i < hours.length; i++) {
+    let hour = $('<li>');
+    hour.text(hours[i]);
+    hour.addClass('my-3');
+    ul.append(hour);
+  }
+  // create calendar
+  for (let i = 0; i < 7; i++) {
+    let dayNumberRow = $('<h1>');
+    let dayNameRow = $('<p>');
+    let boxUl = $('<ul>');
+    boxUl.addClass('sortable2');
+    let div = $('<div>');
+    dayNameRow.text(days[i]);
+    dayNumberRow.text('0');
+    container.append(div);
+    div.append(dayNumberRow);
+    div.append(dayNameRow);
+    div.append(boxUl);
+    for (let j = 0; j < 24; j++) {
+      let insideBox = $('<li>');
+      insideBox.text(hours[j]);
+      insideBox.addClass('ui-state-default');
+      insideBox.addClass('ui-state-disabled'); // THIS NEEDS TO BE DELETED TO HAVE IT VISIBLE
+      boxUl.append(insideBox);
+    }
+  }
+}
+// ######################---no touch above ---#############################
+
+$(function () {
+  createCalendar();
+  const checkout = $('.sortable2');
+  console.log(checkout);
+});
 
 $(function () {
   $('.sortable2').sortable({
