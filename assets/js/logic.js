@@ -60,23 +60,29 @@ function displayDate() {
   currentDay.text(new Date().toLocaleString());
 }
 
-$(function () {
-  $('#datepicker').datepicker();
-});
-
 // ######################---no touch above ---#############################
 
 const formInput = $('#formInput');
 const activityInput = $('#activityInput');
-const datePicker = $('#datepicker');
+const dateInput = $('#dateInput');
+let dayInput;
+let monthInput;
+let yearInput;
 
 let submitForm = function (event) {
   event.preventDefault();
+  let dateValue = dateInput.val();
+  let msec = Date.parse(dateValue);
+  const newDate = new Date(msec);
+  console.log(newDate);
 
-  console.log(activityInput.val());
-  console.log(datePicker.val());
+  let dayInput;
+  let monthInput;
+  let yearInput;
+  // let activityValue = activityInput.val();
+
   activityInput.val('');
-  datePicker.val('');
+  dateInput.val('');
 };
 
 formInput.on('submit', submitForm);
