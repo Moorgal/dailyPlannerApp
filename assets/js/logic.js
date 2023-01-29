@@ -45,6 +45,7 @@ const activityInput = $('#activityInput');
 const dateInput = $('#dateInput');
 const hourInput = $('#hourInput');
 const container = $('#container');
+let form;
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -91,7 +92,7 @@ let submitForm = function (event) {
   event.preventDefault();
   let dateValue = dateToNewDate(dateInput);
 
-  const form = {
+  form = {
     activity: activityInput.val(),
     hour: parseInt(hourInput.val()),
     dayName: days[dateValue.getDay()],
@@ -164,8 +165,6 @@ function createCalendar() {
 
 $(function () {
   createCalendar();
-  const checkout = $('.sortable2');
-  console.log(checkout);
 });
 
 $(function () {
@@ -179,3 +178,11 @@ $(function () {
 $(function () {
   $('.resizable').resizable();
 });
+
+function calculateLastSunday(date) {
+  let theDate = new Date(date);
+  let getDate = theDate.getDate();
+  let getDay = theDate.getDay();
+  let lastSunday = theDate.setDate(getDate - getDay);
+  return new Date(lastSunday);
+}
