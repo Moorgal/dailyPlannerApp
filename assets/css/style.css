@@ -83,3 +83,23 @@ textarea {
   display: block;
   margin: auto;
 }
+
+.sortable2 {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  zoom: 1;
+}
+.sortable2 li {
+  margin: 0 5px 5px 5px;
+  padding: 3px;
+  width: 90%;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr repeat(7, 3fr);
+  border: 1px solid black;
+  width: 90vw;
+  max-width: 1920px;
+}

@@ -88,3 +88,14 @@ function dateToNewDate(value) {
   const newDate = new Date(msec);
   return newDate;
 }
+
+// 1 create 7 column layout
+// 2 create 13 rows in them + 1 for the dayName
+
+$(function () {
+  $('.sortable2').sortable({
+    cancel: '.ui-state-disabled',
+  });
+
+  $('.sortable2 li').disableSelection();
+});
