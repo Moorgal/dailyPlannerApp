@@ -29,7 +29,6 @@
 // collectig ideas / testing
 // ##########################################################################
 
-// const notToday = new Date(2019, 2, 28, 14, 55);
 // const today = new Date();
 // const year = today.getFullYear();
 // const month = today.getMonth();
@@ -37,12 +36,6 @@
 // const hour = today.getHours();
 // const minutes = today.getMinutes();
 
-// console.log(year);
-// console.log(month);
-// console.log(day);
-// console.log(hour);
-// console.log(minutes);
-// console.log(today);
 // // Creating a new Date (with the delta)
 // const finalDate = new Date(year, month, day + 17);
 
@@ -65,24 +58,35 @@ function displayDate() {
 const formInput = $('#formInput');
 const activityInput = $('#activityInput');
 const dateInput = $('#dateInput');
+const hourInput = $('#hourInput');
 let dayInput;
 let monthInput;
 let yearInput;
 
 let submitForm = function (event) {
   event.preventDefault();
-  let dateValue = dateInput.val();
-  let msec = Date.parse(dateValue);
-  const newDate = new Date(msec);
-  console.log(newDate);
+  let dateValue = dateToNewDate(dateInput);
+  let timeValue = hourInput.val();
+  let activityValue = activityInput.val();
+
+  console.log(activityValue);
+  console.log(timeValue);
+  console.log(dateValue);
 
   let dayInput;
   let monthInput;
   let yearInput;
-  // let activityValue = activityInput.val();
 
   activityInput.val('');
   dateInput.val('');
 };
 
 formInput.on('submit', submitForm);
+
+// function what works with a date value, and gives back a new Date() value
+function dateToNewDate(value) {
+  let oldDate = value.val();
+  let msec = Date.parse(oldDate); // swap the date to millisec then from millisec swap to newDate()
+  const newDate = new Date(msec);
+  return newDate;
+}
