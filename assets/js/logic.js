@@ -99,3 +99,7 @@ $(function () {
 
   $('.sortable2 li').disableSelection();
 });
+
+$(function () {
+  $('.resizable').resizable();
+});

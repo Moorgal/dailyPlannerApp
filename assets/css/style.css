@@ -96,6 +96,14 @@ textarea {
   width: 90%;
 }
 
+.resizable {
+  min-width: 25px;
+  max-width: 225px;
+  width: 225px;
+  min-height: 25px;
+  padding: 0.5em;
+}
+
 .container {
   display: grid;
   grid-template-columns: 1fr repeat(7, 3fr);
