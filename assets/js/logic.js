@@ -59,28 +59,26 @@ const formInput = $('#formInput');
 const activityInput = $('#activityInput');
 const dateInput = $('#dateInput');
 const hourInput = $('#hourInput');
-let dayInput;
-let monthInput;
-let yearInput;
+const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 let submitForm = function (event) {
   event.preventDefault();
   let dateValue = dateToNewDate(dateInput);
-  let timeValue = hourInput.val();
-  let activityValue = activityInput.val();
 
-  console.log(activityValue);
-  console.log(timeValue);
-  console.log(dateValue);
-
-  let dayInput;
-  let monthInput;
-  let yearInput;
+  const form = {
+    activity: activityInput.val(),
+    hour: parseInt(hourInput.val()),
+    dayName: days[dateValue.getDay()],
+    dayNumber: dateValue.getDate(),
+    month: months[dateValue.getMonth()],
+    year: dateValue.getFullYear(),
+  };
 
   activityInput.val('');
+  hourInput.val('');
   dateInput.val('');
 };
-
 formInput.on('submit', submitForm);
 
 // function what works with a date value, and gives back a new Date() value
