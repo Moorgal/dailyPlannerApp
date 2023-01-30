@@ -94,12 +94,16 @@ let submitForm = function (event) {
 
   form = {
     activity: activityInput.val(),
-    hour: parseInt(hourInput.val()),
+    hour: hourInput.val(),
     dayName: days[dateValue.getDay()],
     dayNumber: dateValue.getDate(),
     month: months[dateValue.getMonth()],
     year: dateValue.getFullYear(),
   };
+  let localStorageId = `${form.year}${form.month}${form.dayNumber}${form.hour}`;
+  let localStorageMessage = form.activity;
+  localStorage.setItem(localStorageId, localStorageMessage);
+  alert(localStorage.getItem(localStorageId));
 
   activityInput.val('');
   hourInput.val('');
@@ -112,7 +116,7 @@ formInput.on('submit', submitForm);
 // -------------------------------------------------------------------------------
 
 function createCalendar() {
-  let yearMonthDayForId = monthChecker(calculateLastSunday(new Date())); // THIS NEEDS TO BE CHANGED TO HAVE DIFFERENT DATE
+  let yearMonthDayForId = monthChecker(calculateLastSunday(new Date())); // THIS NEEDS TO BE CHANGED TO HAVE DIFFERENT DATE. details in helpers.js
   // let rowId = `${yearMonthDayForId.year[0]}${yearMonthDayForId.month[0]}${yearMonthDayForId.day[0]}`;
   // let boxId = `${hours[0]}`;
   // let uniqueBoxId = rowId.concat(boxId);
@@ -161,13 +165,6 @@ function createCalendar() {
   }
 }
 // ######################---no touch above ---#############################
-
-// -------------------------------------------------------------------------------
-// create box ID dynamically
-// -------------------------------------------------------------------------------
-function createId() {
-  let weekDays = monthChecker(calculateLastSunday(new Date()));
-}
 
 $(function () {
   createCalendar();
