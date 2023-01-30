@@ -118,10 +118,25 @@ function dateToNewDate(value) {
 }
 
 // -------------------------------------------------------------------------------
+// function input is a date and the output is the date of the previous sunday
+// -------------------------------------------------------------------------------
+
+function calculateLastSunday(date) {
+  let theDate = new Date(date);
+  let getDate = theDate.getDate();
+  let getDay = theDate.getDay();
+  let lastSunday = theDate.setDate(getDate - getDay);
+  let sundayID = new Date(lastSunday);
+  return { year: sundayID.getFullYear(), month: months[sundayID.getMonth()], day: sundayID.getDate() };
+}
+
+// -------------------------------------------------------------------------------
 // create the calendar dinamically
 // -------------------------------------------------------------------------------
 
 function createCalendar() {
+  let numberOfWeeks = monthChecker(calculateLastSunday(new Date()));
+  console.log(numberOfWeeks);
   // create time on left
   let dayNumberRow = $('<h1>');
   let dayNameRow = $('<p>');
@@ -147,7 +162,7 @@ function createCalendar() {
     boxUl.addClass('sortable2');
     let div = $('<div>');
     dayNameRow.text(days[i]);
-    dayNumberRow.text('0');
+    dayNumberRow.text(numberOfWeeks[i]);
     container.append(div);
     div.append(dayNumberRow);
     div.append(dayNameRow);
@@ -179,10 +194,4 @@ $(function () {
   $('.resizable').resizable();
 });
 
-function calculateLastSunday(date) {
-  let theDate = new Date(date);
-  let getDate = theDate.getDate();
-  let getDay = theDate.getDay();
-  let lastSunday = theDate.setDate(getDate - getDay);
-  return new Date(lastSunday);
-}
+console.log(calculateLastSunday(new Date()));
