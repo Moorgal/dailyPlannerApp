@@ -113,9 +113,9 @@ formInput.on('submit', submitForm);
 
 function createCalendar() {
   let yearMonthDayForId = monthChecker(calculateLastSunday(new Date())); // THIS NEEDS TO BE CHANGED TO HAVE DIFFERENT DATE
-  console.log(yearMonthDayForId);
-  let hourId = hours;
-  console.log(hourId);
+  // let rowId = `${yearMonthDayForId.year[0]}${yearMonthDayForId.month[0]}${yearMonthDayForId.day[0]}`;
+  // let boxId = `${hours[0]}`;
+  // let uniqueBoxId = rowId.concat(boxId);
 
   // create time on left
   let dayNumberRow = $('<h1>');
@@ -136,13 +136,14 @@ function createCalendar() {
   }
   // create calendar
   for (let i = 0; i < 7; i++) {
+    let rowId = `${yearMonthDayForId.year[i]}${yearMonthDayForId.month[i]}${yearMonthDayForId.day[i]}`;
     let dayNumberRow = $('<h1>');
     let dayNameRow = $('<p>');
     let boxUl = $('<ul>');
     boxUl.addClass('sortable2');
     let div = $('<div>');
     dayNameRow.text(days[i]);
-    dayNumberRow.text('---');
+    dayNumberRow.text(yearMonthDayForId.day[i]);
     container.append(div);
     div.append(dayNumberRow);
     div.append(dayNameRow);
@@ -153,6 +154,9 @@ function createCalendar() {
       insideBox.addClass('ui-state-default');
       insideBox.addClass('ui-state-disabled'); // THIS NEEDS TO BE DELETED TO HAVE IT VISIBLE
       boxUl.append(insideBox);
+      let boxId = `${hours[j]}`;
+      let uniqueBoxId = rowId.concat(boxId);
+      $(insideBox).attr('id', uniqueBoxId);
     }
   }
 }
