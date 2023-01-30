@@ -40,9 +40,9 @@ function monthChecker({ year: year, month: month, day: day }) {
   let weekValues = [];
   let monthValues = [];
   let yearValues = [];
-  let thirtyone = ['January', 'March', 'May', 'July', 'August', 'October', 'December'];
-  let thirty = ['April', 'June', 'September', 'November'];
-  let twentyeight = ['February'];
+  let thirtyone = [00, 02, 04, 06, 07, 09, 11];
+  let thirty = [03, 05, 08, 10];
+  let twentyeight = [1];
   if (thirtyone.includes(month)) {
     for (let i = 0; i < 7; i++) {
       let number = day + i;
@@ -181,7 +181,7 @@ function monthChecker({ year: year, month: month, day: day }) {
     }
   }
   for (let i = 0; i < 7; i++) {
-    if (monthValues[i] === 'December' && monthValues.indexOf[i] !== monthValues.indexOf[i + 1]) {
+    if (monthValues[i] === 11 && monthValues.indexOf[i] !== monthValues.indexOf[i + 1]) {
       yearValues.push(year + 1);
     } else {
       yearValues.push(year);
