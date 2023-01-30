@@ -45,7 +45,6 @@ const activityInput = $('#activityInput');
 const dateInput = $('#dateInput');
 const hourInput = $('#hourInput');
 const container = $('#container');
-let form;
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January'];
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -92,7 +91,7 @@ let submitForm = function (event) {
   event.preventDefault();
   let dateValue = dateToNewDate(dateInput);
 
-  form = {
+  let form = {
     activity: activityInput.val(),
     hour: hourInput.val(),
     dayName: days[dateValue.getDay()],
@@ -156,7 +155,7 @@ function createCalendar() {
       let insideBox = $('<li>');
       insideBox.text(hours[j]);
       insideBox.addClass('ui-state-default');
-      insideBox.addClass('ui-state-disabled'); // THIS NEEDS TO BE DELETED TO HAVE IT VISIBLE
+      // insideBox.addClass('ui-state-disabled'); // THIS NEEDS TO BE DELETED TO HAVE IT VISIBLE
       boxUl.append(insideBox);
       let boxId = `${hours[j]}`;
       let uniqueBoxId = rowId.concat(boxId);
@@ -165,6 +164,19 @@ function createCalendar() {
   }
 }
 // ######################---no touch above ---#############################
+
+// -------------------------------------------------------------------------------
+// function what displays the current time and date
+// -------------------------------------------------------------------------------
+
+setInterval(renderLocalStorage, 1000);
+function renderLocalStorage() {
+  for (let i = 0; i < localStorage.length; i++) {
+    const hopeItWorks = document.getElementById(localStorage.key(i));
+    let fillInContent = localStorage.getItem(localStorage.key(i));
+    hopeItWorks.textContent = fillInContent;
+  }
+}
 
 $(function () {
   createCalendar();
@@ -181,3 +193,5 @@ $(function () {
 $(function () {
   $('.resizable').resizable();
 });
+
+// 24: <li id="2023January290:00" class="ui-state-default ui-stat…bled ui-sortable-handle"></li>
