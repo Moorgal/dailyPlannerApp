@@ -1,4 +1,29 @@
+// -------------------------------------------------------------------------------
+// function what works with a date value, and gives back a new Date() value
+// -------------------------------------------------------------------------------
+function dateToNewDate(value) {
+  let oldDate = value.val();
+  let msec = Date.parse(oldDate); // swap the date to millisec then from millisec swap to newDate()
+  const newDate = new Date(msec);
+  return newDate;
+}
+
+// -------------------------------------------------------------------------------
+// function input is a date and the output is the date of the previous sunday
+// -------------------------------------------------------------------------------
+
+function calculateLastSunday(date) {
+  let theDate = new Date(date);
+  let getDate = theDate.getDate();
+  let getDay = theDate.getDay();
+  let lastSunday = theDate.setDate(getDate - getDay);
+  let sundayID = new Date(lastSunday);
+  return { year: sundayID.getFullYear(), month: months[sundayID.getMonth()], day: sundayID.getDate() };
+}
+
+// -------------------------------------------------------------------------------
 // small function to check leap year
+// -------------------------------------------------------------------------------
 function checkLeapYear(year) {
   if ((0 == year % 4 && 0 != year % 100) || 0 == year % 400) {
     return true;
@@ -12,12 +37,13 @@ function checkLeapYear(year) {
 // -------------------------------------------------------------------------------
 
 function monthChecker({ year: year, month: month, day: day }) {
-  let weekDays = [];
+  let weekValues = [];
+  let monthValues = [];
+  let yearValues = [];
   let thirtyone = ['January', 'March', 'May', 'July', 'August', 'October', 'December'];
   let thirty = ['April', 'June', 'September', 'November'];
   let twentyeight = ['February'];
   if (thirtyone.includes(month)) {
-    let number;
     for (let i = 0; i < 7; i++) {
       let number = day + i;
       if (number > 31) {
@@ -44,13 +70,14 @@ function monthChecker({ year: year, month: month, day: day }) {
           case 38:
             newNumber = 7;
         }
-        weekDays.push(newNumber);
+        weekValues.push(newNumber);
+        monthValues.push(months[months.indexOf(month) + 1]);
       } else {
-        weekDays.push(number);
+        weekValues.push(number);
+        monthValues.push(month);
       }
     }
   } else if (thirty.includes(month)) {
-    let number;
     for (let i = 0; i < 7; i++) {
       let number = day + i;
       if (number > 30) {
@@ -77,13 +104,14 @@ function monthChecker({ year: year, month: month, day: day }) {
           case 37:
             newNumber = 7;
         }
-        weekDays.push(newNumber);
+        weekValues.push(newNumber);
+        monthValues.push(months[months.indexOf(month) + 1]);
       } else {
-        weekDays.push(number);
+        weekValues.push(number);
+        monthValues.push(month);
       }
     }
   } else if (twentyeight.includes(month)) {
-    let number;
     for (let i = 0; i < 7; i++) {
       let number = day + i;
       if (number > 28) {
@@ -110,13 +138,14 @@ function monthChecker({ year: year, month: month, day: day }) {
           case 35:
             newNumber = 7;
         }
-        weekDays.push(newNumber);
+        weekValues.push(newNumber);
+        monthValues.push(months[months.indexOf(month) + 1]);
       } else {
-        weekDays.push(number);
+        weekValues.push(number);
+        monthValues.push(month);
       }
     }
   } else if (twentyeight.includes(month) && checkLeapYear(year)) {
-    let number;
     for (let i = 0; i < 7; i++) {
       let number = day + i;
       if (number > 28) {
@@ -143,12 +172,20 @@ function monthChecker({ year: year, month: month, day: day }) {
           case 35:
             newNumber = 7;
         }
-        weekDays.push(newNumber);
+        weekValues.push(newNumber);
+        monthValues.push(months[months.indexOf(month) + 1]);
       } else {
-        weekDays.push(number);
+        weekValues.push(number);
+        monthValues.push(month);
       }
     }
   }
-
-  return weekDays;
+  for (let i = 0; i < 7; i++) {
+    if (monthValues[i] === 'December' && monthValues.indexOf[i] !== monthValues.indexOf[i + 1]) {
+      yearValues.push(year + 1);
+    } else {
+      yearValues.push(year);
+    }
+  }
+  return { year: yearValues, month: monthValues, day: weekValues };
 }

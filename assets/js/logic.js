@@ -47,7 +47,7 @@ const hourInput = $('#hourInput');
 const container = $('#container');
 let form;
 
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January'];
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const hours = [
   '0:00',
@@ -108,35 +108,15 @@ let submitForm = function (event) {
 formInput.on('submit', submitForm);
 
 // -------------------------------------------------------------------------------
-// function what works with a date value, and gives back a new Date() value
-// -------------------------------------------------------------------------------
-function dateToNewDate(value) {
-  let oldDate = value.val();
-  let msec = Date.parse(oldDate); // swap the date to millisec then from millisec swap to newDate()
-  const newDate = new Date(msec);
-  return newDate;
-}
-
-// -------------------------------------------------------------------------------
-// function input is a date and the output is the date of the previous sunday
-// -------------------------------------------------------------------------------
-
-function calculateLastSunday(date) {
-  let theDate = new Date(date);
-  let getDate = theDate.getDate();
-  let getDay = theDate.getDay();
-  let lastSunday = theDate.setDate(getDate - getDay);
-  let sundayID = new Date(lastSunday);
-  return { year: sundayID.getFullYear(), month: months[sundayID.getMonth()], day: sundayID.getDate() };
-}
-
-// -------------------------------------------------------------------------------
 // create the calendar dinamically
 // -------------------------------------------------------------------------------
 
 function createCalendar() {
-  let numberOfWeeks = monthChecker(calculateLastSunday(new Date()));
-  console.log(numberOfWeeks);
+  let yearMonthDayForId = monthChecker(calculateLastSunday(new Date())); // THIS NEEDS TO BE CHANGED TO HAVE DIFFERENT DATE
+  console.log(yearMonthDayForId);
+  let hourId = hours;
+  console.log(hourId);
+
   // create time on left
   let dayNumberRow = $('<h1>');
   let dayNameRow = $('<p>');
@@ -162,7 +142,7 @@ function createCalendar() {
     boxUl.addClass('sortable2');
     let div = $('<div>');
     dayNameRow.text(days[i]);
-    dayNumberRow.text(numberOfWeeks[i]);
+    dayNumberRow.text('---');
     container.append(div);
     div.append(dayNumberRow);
     div.append(dayNameRow);
@@ -177,6 +157,13 @@ function createCalendar() {
   }
 }
 // ######################---no touch above ---#############################
+
+// -------------------------------------------------------------------------------
+// create box ID dynamically
+// -------------------------------------------------------------------------------
+function createId() {
+  let weekDays = monthChecker(calculateLastSunday(new Date()));
+}
 
 $(function () {
   createCalendar();
@@ -193,5 +180,3 @@ $(function () {
 $(function () {
   $('.resizable').resizable();
 });
-
-console.log(calculateLastSunday(new Date()));
