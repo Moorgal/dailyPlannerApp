@@ -130,20 +130,21 @@ function renderLocalStorage() {
     displayData.classList.remove('ui-state-disabled');
     displayData.innerHTML = `${fillInContent}<button class="delete-btn" onclick="removeItem(event)")">x</button>`;
   }
-
+  // checks the current date and creates a string out of it
   currentDateString = `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}${addZero(new Date().getHours())}`;
   let past = [];
   let future = [];
-
+  // checks the string in all the elements where id ends with ".00"
   $("[id$='.00']").each(function () {
     let targetId = $(this).attr('id');
-
+    // compair the two string and based on the targetId is higher or lower they go to past[] or future[]
     if (targetId > currentDateString) {
       future.push(targetId);
     } else {
       past.push(targetId);
     }
   });
+  // adds past/future class what colors the elements
   for (let i = 0; i < past.length; i++) {
     let element = document.getElementById(past[i]);
     element.classList.add('past');
@@ -155,7 +156,7 @@ function renderLocalStorage() {
   document.getElementById(`${currentDateString}.00`).classList.remove('future');
   document.getElementById(`${currentDateString}.00`).classList.add('present');
 }
-
+// remove the action from localStorage
 function removeItem(event) {
   let btn = $(event.target);
   let parentId = btn.parent().attr('id');
