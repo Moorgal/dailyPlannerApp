@@ -1,4 +1,4 @@
-# dailyPlannerApp
+# Daily Planner App
 
 Table of Contents
 
