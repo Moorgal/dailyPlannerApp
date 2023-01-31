@@ -1,45 +1,3 @@
-// to-do
-
-// * Display the current day at the top of the calender when a user opens the planner.
-
-// * Present timeblocks for standard business hours when the user scrolls down.
-
-// * Color-code each timeblock based on past, present, and future when the timeblock is viewed.
-
-// * Allow a user to enter an event when they click a timeblock
-
-// * Save the event in local storage when the save button is clicked in that timeblock.
-
-// * Persist events between refreshes of a page
-
-// ----------------------------------------------------------------------------
-// pseudo
-
-// 1 create HMTL
-// 2 create dynamic dates and calendar for a week
-// 3 add todo list dragable ----- sortable conect list - to create a dynamic experience. Left side add todo then drag it to calendar
-//   --top days of the week and hours from top to bottom
-//   --left side top date picker above an add task section
-// 4 set up current date on the top
-// 5 shade grey time what already passed.
-// 6 get info from local storage
-
-// ----------------------------------------------------------------------------
-// ##########################################################################
-// collectig ideas / testing
-// ##########################################################################
-
-// // Creating a new Date (with the delta)
-// const finalDate = new Date(year, month, day + 17);
-
-// console.log(finalDate); // 31 March 2019
-
-// today.toLocaleString();
-
-// $(function () {
-//   console.log('it loads when the whole page got loaded');
-// });
-
 const formInput = $('#formInput');
 const activityInput = $('#activityInput');
 const dateInput = $('#dateInput');
@@ -102,7 +60,6 @@ let submitForm = function (event) {
   let localStorageId = `${form.year}${form.month}${form.dayNumber}${form.hour}`;
   let localStorageMessage = form.activity;
   localStorage.setItem(localStorageId, localStorageMessage);
-  alert(localStorage.getItem(localStorageId));
 
   activityInput.val('');
   hourInput.val('');
@@ -113,23 +70,22 @@ formInput.on('submit', submitForm);
 // -------------------------------------------------------------------------------
 // create the calendar dinamically
 // -------------------------------------------------------------------------------
-
 function createCalendar() {
   let yearMonthDayForId = monthChecker(calculateLastSunday(new Date())); // THIS NEEDS TO BE CHANGED TO HAVE DIFFERENT DATE. details in helpers.js
 
   // create time on left
-  let dayNumberRow = $('<h1>');
-  let dayNameRow = $('<p>');
+  let dayNumberRow = $('<h1 class="empty">');
+  let dayNameRow = $('<p class="empty">');
   let ul = $('<ul>');
   let div = $('<div>');
-  dayNameRow.text('hey');
-  dayNumberRow.text('0');
+  dayNameRow.text('     ');
+  dayNumberRow.text('     ');
   container.append(div);
   div.append(dayNumberRow);
   div.append(dayNameRow);
   div.append(ul);
   for (let i = 0; i < hours.length; i++) {
-    let hour = $('<li>');
+    let hour = $('<li style="padding:1rem;">');
     hour.text(hours[i]);
     hour.addClass('my-3');
     ul.append(hour);
@@ -138,8 +94,8 @@ function createCalendar() {
   for (let i = 0; i < 7; i++) {
     let rowId = `${yearMonthDayForId.year[i]}${yearMonthDayForId.month[i]}${yearMonthDayForId.day[i]}`;
 
-    let dayNumberRow = $('<h1>');
-    let dayNameRow = $('<p>');
+    let dayNumberRow = $('<h1 style="text-align:center;">');
+    let dayNameRow = $('<p style="text-align:center;">');
     let boxUl = $('<ul>');
     boxUl.addClass('sortable2');
     let div = $('<div>');
@@ -151,9 +107,9 @@ function createCalendar() {
     div.append(boxUl);
     for (let j = 0; j < 24; j++) {
       let insideBox = $('<li>');
-      insideBox.text(hours[j]);
+      // insideBox.text(hours[j]);
       insideBox.addClass('ui-state-default');
-      insideBox.addClass('ui-state-disabled'); // THIS NEEDS TO BE DELETED TO HAVE IT VISIBLE
+      insideBox.addClass('ui-state-disabled');
       boxUl.append(insideBox);
       let boxId = `${hours[j]}`;
       let uniqueBoxId = rowId.concat(boxId);
@@ -161,25 +117,23 @@ function createCalendar() {
     }
   }
 }
-// ######################---no touch above ---#############################
 
 // -------------------------------------------------------------------------------
 // function what displays the current time and date
 // -------------------------------------------------------------------------------
-
+let allId = [];
 setInterval(renderLocalStorage, 1000);
 function renderLocalStorage() {
   for (let i = 0; i < localStorage.length; i++) {
     const displayData = document.getElementById(localStorage.key(i));
     let fillInContent = localStorage.getItem(localStorage.key(i));
-    displayData.textContent = fillInContent;
     displayData.classList.remove('ui-state-disabled');
+    displayData.innerHTML = `${fillInContent}<button class="delete-btn" onclick="removeItem(event)")">x</button>`;
   }
 
   currentDateString = `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}${addZero(new Date().getHours())}`;
   let past = [];
   let future = [];
-  console.log(currentDateString);
 
   $("[id$='.00']").each(function () {
     let targetId = $(this).attr('id');
@@ -190,7 +144,6 @@ function renderLocalStorage() {
       past.push(targetId);
     }
   });
-
   for (let i = 0; i < past.length; i++) {
     let element = document.getElementById(past[i]);
     element.classList.add('past');
@@ -200,8 +153,18 @@ function renderLocalStorage() {
     element.classList.add('future');
   }
   document.getElementById(`${currentDateString}.00`).classList.remove('future');
-  document.getElementById(`${currentDateString}.00`).classList.remove('past');
   document.getElementById(`${currentDateString}.00`).classList.add('present');
+}
+
+// ######################---no touch above ---#############################
+
+function removeItem(event) {
+  let btn = $(event.target);
+  let parentId = btn.parent().attr('id');
+  btn.parent().addClass('ui-state-disabled');
+
+  localStorage.removeItem(parentId);
+  btn.parent().text(' ').fadeOut().fadeIn();
 }
 
 $(function () {

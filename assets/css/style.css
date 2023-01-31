@@ -91,7 +91,7 @@ textarea {
   zoom: 1;
 }
 .sortable2 li {
-  margin: 0 5px 5px 5px;
+  margin: 15px;
   padding: 3px;
   width: 90%;
 }
@@ -110,4 +110,58 @@ textarea {
   border: 1px solid black;
   width: 90vw;
   max-width: 1920px;
+}
+li {
+  height: 4rem;
+  list-style-type: none;
+  margin: 1rem;
+}
+.empty {
+  width: 30px;
+  height: 30px;
+}
+
+.input-form {
+  width: 35rem;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  transition: all 0.3s linear;
+}
+.input-form:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.input-form h3 {
+  padding-top: 1.25rem;
+  color: #617d98;
+}
+.form-group {
+  padding: 1rem 1.5rem;
+}
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  background: #f1f5f8;
+  border-radius: 0.5rem;
+  letter-spacing: 0.25rem;
+}
+
+.btn {
+  text-transform: uppercase;
+  background: #678e3e;
+  color: white;
+  letter-spacing: 0.25rem;
+  display: inline-block;
+  transition: all 0.3s linear;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  padding: 1rem;
+}
+
+.btn:hover {
+  color: #678e3e;
+  background-color: #beed8c;
 }
