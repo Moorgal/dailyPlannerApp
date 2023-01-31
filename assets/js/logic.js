@@ -49,16 +49,16 @@ const container = $('#container');
 const months = [00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 00];
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const hours = [
-  '0.00',
-  '1.00',
-  '2.00',
-  '3.00',
-  '4.00',
-  '5.00',
-  '6.00',
-  '7.00',
-  '8.00',
-  '9.00',
+  '00.00',
+  '01.00',
+  '02.00',
+  '03.00',
+  '04.00',
+  '05.00',
+  '06.00',
+  '07.00',
+  '08.00',
+  '09.00',
   '10.00',
   '11.00',
   '12.00',
@@ -116,9 +116,6 @@ formInput.on('submit', submitForm);
 
 function createCalendar() {
   let yearMonthDayForId = monthChecker(calculateLastSunday(new Date())); // THIS NEEDS TO BE CHANGED TO HAVE DIFFERENT DATE. details in helpers.js
-  // let rowId = `${yearMonthDayForId.year[0]}${yearMonthDayForId.month[0]}${yearMonthDayForId.day[0]}`;
-  // let boxId = `${hours[0]}`;
-  // let uniqueBoxId = rowId.concat(boxId);
 
   // create time on left
   let dayNumberRow = $('<h1>');
@@ -140,6 +137,7 @@ function createCalendar() {
   // create calendar
   for (let i = 0; i < 7; i++) {
     let rowId = `${yearMonthDayForId.year[i]}${yearMonthDayForId.month[i]}${yearMonthDayForId.day[i]}`;
+
     let dayNumberRow = $('<h1>');
     let dayNameRow = $('<p>');
     let boxUl = $('<ul>');
@@ -155,7 +153,7 @@ function createCalendar() {
       let insideBox = $('<li>');
       insideBox.text(hours[j]);
       insideBox.addClass('ui-state-default');
-      // insideBox.addClass('ui-state-disabled'); // THIS NEEDS TO BE DELETED TO HAVE IT VISIBLE
+      insideBox.addClass('ui-state-disabled'); // THIS NEEDS TO BE DELETED TO HAVE IT VISIBLE
       boxUl.append(insideBox);
       let boxId = `${hours[j]}`;
       let uniqueBoxId = rowId.concat(boxId);
@@ -172,10 +170,38 @@ function createCalendar() {
 setInterval(renderLocalStorage, 1000);
 function renderLocalStorage() {
   for (let i = 0; i < localStorage.length; i++) {
-    const hopeItWorks = document.getElementById(localStorage.key(i));
+    const displayData = document.getElementById(localStorage.key(i));
     let fillInContent = localStorage.getItem(localStorage.key(i));
-    hopeItWorks.textContent = fillInContent;
+    displayData.textContent = fillInContent;
+    displayData.classList.remove('ui-state-disabled');
   }
+
+  currentDateString = `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}${addZero(new Date().getHours())}`;
+  let past = [];
+  let future = [];
+  console.log(currentDateString);
+
+  $("[id$='.00']").each(function () {
+    let targetId = $(this).attr('id');
+
+    if (targetId > currentDateString) {
+      future.push(targetId);
+    } else {
+      past.push(targetId);
+    }
+  });
+
+  for (let i = 0; i < past.length; i++) {
+    let element = document.getElementById(past[i]);
+    element.classList.add('past');
+  }
+  for (let i = 0; i < future.length; i++) {
+    let element = document.getElementById(future[i]);
+    element.classList.add('future');
+  }
+  document.getElementById(`${currentDateString}.00`).classList.remove('future');
+  document.getElementById(`${currentDateString}.00`).classList.remove('past');
+  document.getElementById(`${currentDateString}.00`).classList.add('present');
 }
 
 $(function () {
@@ -193,5 +219,3 @@ $(function () {
 $(function () {
   $('.resizable').resizable();
 });
-
-// 24: <li id="2023January290:00" class="ui-state-default ui-stat…bled ui-sortable-handle"></li>

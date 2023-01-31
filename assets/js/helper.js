@@ -20,7 +20,6 @@ function calculateLastSunday(date) {
   let sundayID = new Date(lastSunday);
   return { year: sundayID.getFullYear(), month: months[sundayID.getMonth()], day: sundayID.getDate() };
 }
-
 // -------------------------------------------------------------------------------
 // small function to check leap year
 // -------------------------------------------------------------------------------
@@ -188,4 +187,15 @@ function monthChecker({ year: year, month: month, day: day }) {
     }
   }
   return { year: yearValues, month: monthValues, day: weekValues };
+}
+
+// -------------------------------------------------------------------------------
+// small function what helps to even out the hour data
+// -------------------------------------------------------------------------------
+
+function addZero(hour) {
+  if (hour < 10) {
+    hour = '0' + hour;
+  }
+  return hour;
 }
