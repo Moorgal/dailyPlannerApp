@@ -156,8 +156,6 @@ function renderLocalStorage() {
   document.getElementById(`${currentDateString}.00`).classList.add('present');
 }
 
-// ######################---no touch above ---#############################
-
 function removeItem(event) {
   let btn = $(event.target);
   let parentId = btn.parent().attr('id');
